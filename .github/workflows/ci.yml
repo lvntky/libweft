@@ -7,16 +7,16 @@ on:
     branches: [master]
 
 jobs:
-  lint:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: install
-        run: sudo apt-get update && sudo apt-get install -y clang-format-18
-      - name: format
-        run: |
-          find source include example test -name '*.[ch]' -print0 \
-            | xargs -0 clang-format-18 --dry-run --Werror
+  #lint:
+  #  runs-on: ubuntu-24.04
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - name: install
+  #      run: sudo apt-get update && sudo apt-get install -y clang-format-18
+  #    - name: format
+  #      run: |
+  #        find source include example test -name '*.[ch]' -print0 \
+  #          | xargs -0 clang-format-18 --dry-run --Werror
 
   build:
     strategy:

@@ -1,11 +1,11 @@
-#include "weft/weft.h"
-
 #include <string.h>
 
-int main(int argc, char const* argv[])
-{
-  (void)argc;
-  (void)argv;
+#include "weft/weft.h"
 
-  return strcmp(exported_function(), "weft") == 0 ? 0 : 1;
+int main(int argc, const char *argv[])
+{
+    (void)argc;
+    (void)argv;
+
+    return strcmp(exported_function(), "weft") == 0 ? 0 : 1;
 }

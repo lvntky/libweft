@@ -1,5 +1,10 @@
 # weft
 
+[![ci](https://github.com/lvntky/weft/actions/workflows/ci.yml/badge.svg)](https://github.com/lvntky/weft/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/lvntky/weft)](LICENSE)
+![C11](https://img.shields.io/badge/C-11-blue)
+![platform](https://img.shields.io/badge/platform-Linux%205.19%2B-lightgrey)
+
 Structured concurrency for C, built on io_uring.
 
 Write blocking-looking code. Get non-blocking execution, mandatory

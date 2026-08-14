@@ -25,13 +25,25 @@ static void conn(void *arg) {
 }
 ```
 
+## What it is ?
+
+Weft is a library primarely supports 3 operations:
+
+- **Stackfull coroutines.** OS threads are expensive. Costs megabytes of stack and syscall overhead per switch. A *weft task* costs 64KB and a few nano seconds. 
+- **A Work Stealing Scheduler.** Tasks are distributed across N worker thread on io_uring instance each. Idle workes steal from busy ones.
+- **Task Groups.** A group does not close until it's children finish. Cancel a
+  group and cancellation propagates down the tree, pending kernel operations
+  included.
+
 ## Why
 
-- **Deadlines are not optional.** Every I/O call takes one. Hung
-  connections are a bug you cannot write.
-- **Task groups, not orphans.** A group does not close until its
-  children finish or are canceled.
-- **No callbacks.** Stackful coroutines over a work-stealing scheduler.
+C programmers building high-concurrency network services — proxies, databases,
+brokers, gateways — currently choose between libuv and writing their own event
+loop. libuv was designed in 2011 around callbacks and epoll; io_uring support
+came later and partially. liburing is a syscall wrapper, not a runtime: you
+still build everything above it yourself.
+
+Rust has Tokio. Go has goroutines. Zig has libxev. C has a gap. There is actually libraries like libdill which is unmainted pre io-uring and libmill which is also unmaintained library. Weft is more io-uring native and modern apporach to async.
 
 ## Status
 

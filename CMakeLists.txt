@@ -7,7 +7,7 @@ project(
     VERSION 0.1.0
     DESCRIPTION "Coroutine based async runtime"
     HOMEPAGE_URL "https://getweft.com"
-    LANGUAGES C ASM
+    LANGUAGES C ASM_NASM
 )
 
 include(cmake/project-is-top-level.cmake)
@@ -47,6 +47,7 @@ configure_file(
 add_library(
     weft_weft
     source/runtime.c
+    source/coro_x86_64.asm
 )
 add_library(weft::weft ALIAS weft_weft)
 

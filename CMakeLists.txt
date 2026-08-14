@@ -115,6 +115,14 @@ endif()
 
 # ---- Install rules ----
 
+include(GNUInstallDirs)
+
+configure_file(
+    "${PROJECT_SOURCE_DIR}/weft.pc.in"
+    "${PROJECT_BINARY_DIR}/weft.pc"
+    @ONLY
+)
+
 if(NOT CMAKE_SKIP_INSTALL_RULES)
   include(cmake/install-rules.cmake)
 endif()

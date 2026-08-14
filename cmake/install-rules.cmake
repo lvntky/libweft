@@ -70,3 +70,15 @@ install(
 if(PROJECT_IS_TOP_LEVEL)
   include(CPack)
 endif()
+
+install(
+    FILES "${PROJECT_BINARY_DIR}/weft.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT weft_Development
+)
+
+install(
+    DIRECTORY "${PROJECT_BINARY_DIR}/export/"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    COMPONENT weft_Development
+)

@@ -1,0 +1,64 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: install
+        run: sudo apt-get update && sudo apt-get install -y clang-format-18
+      - name: format
+        run: |
+          find source include example test -name '*.[ch]' -print0 \
+            | xargs -0 clang-format-18 --dry-run --Werror
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        type: [Debug, Release]
+    runs-on: ubuntu-24.04
+    env:
+      CC: ${{ matrix.compiler }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build liburing-dev pkg-config
+      - name: build and test
+        run: ./build.sh -t ${{ matrix.type }} test
+
+  sanitize:
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [Asan, Tsan]
+    runs-on: ubuntu-24.04
+    env:
+      CC: clang
+    steps:
+      - uses: actions/checkout@v4
+      - name: deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build liburing-dev pkg-config
+      - name: build and test
+        run: ./build.sh -t ${{ matrix.mode }} test
+
+  install:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build liburing-dev pkg-config
+      - name: install
+        run: sudo ./build.sh -t Release install -p /usr/local
+      - name: consume via pkg-config
+        run: |
+          printf '#include <weft/weft.h>\n#include <stdio.h>\nint main(void){puts(weft_version_string());}\n' > t.c
+          cc t.c $(pkg-config --cflags --libs weft) -o t
+          ./t

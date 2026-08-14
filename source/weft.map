@@ -1,0 +1,6 @@
+WEFT_1.0 {
+  global:
+    weft_*;
+  local:
+    *;
+};

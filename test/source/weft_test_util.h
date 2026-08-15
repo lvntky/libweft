@@ -1,5 +1,5 @@
-#ifndef WEFT_TEST_HARNESS_H
-#define WEFT_TEST_HARNESS_H
+#ifndef WEFT_TEST_WEFT_TEST_UTIL_H
+#define WEFT_TEST_WEFT_TEST_UTIL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,4 +45,4 @@ static int weft_test_failures = 0;
 
 #define TEST_MAIN_END() return weft_test_failures == 0 ? 0 : 1
 
-#endif
+#endif // WEFT_TEST_WEFT_TEST_UTIL_H

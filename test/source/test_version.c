@@ -1,6 +1,6 @@
 #include <weft/weft.h>
 
-#include "harness.h"
+#include "weft_test_util.h"
 
 static void version_string_matches_header(void)
 {
